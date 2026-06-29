@@ -19,6 +19,9 @@
   "skills": "./skills/",
   "commands": [
     "./commands/done-gate-status.md",
-    "./commands/done-gate-log.md"
+    "./commands/done-gate-log.md",
+    "./commands/done-gate-config.md",
+    "./commands/done-gate-handoff.md",
+    "./commands/done-gate-explain.md"
   ]
 }

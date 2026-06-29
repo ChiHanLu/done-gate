@@ -96,8 +96,11 @@ Triggers automatically at wrap-up, or invoke manually:
 ```
 /done-gate                       # run the acceptance flow
 /done-gate log:off as:elder lang:both
-/done-gate-status                     # snapshot of this round's pass/pending
-/done-gate-log                        # summarize ACCEPTANCE.md history
+/done-gate-status                # snapshot of this round's pass/pending
+/done-gate-log                   # summarize ACCEPTANCE.md history
+/done-gate-config as:client      # view/set per-project defaults (.done-gate.json)
+/done-gate-handoff               # generate a plain-language handoff doc
+/done-gate-explain <feature>     # re-explain one feature in plain language
 ```
 
 | Param | Values | Default | Effect |

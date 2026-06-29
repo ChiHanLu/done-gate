@@ -154,6 +154,11 @@ dependencies just to screenshot. Detailed steps: [references/screenshot-flow.md]
 ## Companion commands
 - `/done-gate-status` — list the current round's per-item status (passed / pending).
 - `/done-gate-log` — summarize the delivery history in `ACCEPTANCE.md`.
+- `/done-gate-config` — view/set per-project defaults (`log`/`as`/`lang`) in `.done-gate.json`.
+- `/done-gate-handoff` — generate a plain-language handoff doc from verified features.
+- `/done-gate-explain` — re-explain one delivered feature in plain language (optional audience).
+
+> Defaults precedence: explicit `/done-gate` args > `.done-gate.json` (if present) > built-in defaults.
 
 ## Wrap-up self-check
 - [ ] Plain-language summary has zero jargon, all three parts (what / where / how)
