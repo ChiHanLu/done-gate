@@ -8,3 +8,6 @@ to have the user verify each item.
 
 **Do not wrap up or self-declare done until the user has personally checked off "everything is done".**
 Any unchecked item counts as not passed and must be fixed, then re-verified.
+
+Exception: if `.done-gate.json` has `"enabled": false`, or the user asks to skip it this round,
+do not run the gate.

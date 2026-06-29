@@ -102,7 +102,7 @@ Triggers automatically at wrap-up, or invoke manually:
 /done-gate log:off as:elder lang:both
 /done-gate-status                # snapshot of this round's pass/pending
 /done-gate-log                   # summarize ACCEPTANCE.md history
-/done-gate-config as:client      # view/set per-project defaults (.done-gate.json)
+/done-gate-config off            # turn done-gate on/off (or set log/as/lang defaults)
 /done-gate-handoff               # generate a plain-language handoff doc
 /done-gate-explain <feature>     # re-explain one feature in plain language
 ```

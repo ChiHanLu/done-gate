@@ -10,6 +10,13 @@ This skill governs how Claude Code **wraps up** each round of coding/editing wor
 before declaring done or ending, explain the result in plain language and have the user verify
 each item via a checkmark. **Do not wrap up until the user has checked off everything.**
 
+## Enabled toggle (check first)
+
+If `.done-gate.json` in the project root has `"enabled": false`, **do not run the acceptance gate**
+on wrap-up. If invoked explicitly while disabled, state that done-gate is off and how to re-enable
+(`/done-gate-config on`). The user may also ask to skip the gate for a single conversation in chat —
+honor that without changing any config. When enabled (default), proceed with the flow below.
+
 ## Principle 0: anti-self-pass guardrail (highest priority, overrides everything)
 
 - **Never** self-declare "done / finished / should be fine" while the user has not checked items off.
@@ -154,7 +161,7 @@ dependencies just to screenshot. Detailed steps: [references/screenshot-flow.md]
 ## Companion commands
 - `/done-gate-status` — list the current round's per-item status (passed / pending).
 - `/done-gate-log` — summarize the delivery history in `ACCEPTANCE.md`.
-- `/done-gate-config` — view/set per-project defaults (`log`/`as`/`lang`) in `.done-gate.json`.
+- `/done-gate-config` — turn done-gate `on`/`off`, or view/set defaults (`log`/`as`/`lang`) in `.done-gate.json`.
 - `/done-gate-handoff` — generate a plain-language handoff doc from verified features.
 - `/done-gate-explain` — re-explain one delivered feature in plain language (optional audience).
 
