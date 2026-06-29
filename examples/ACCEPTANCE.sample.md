@@ -1,29 +1,29 @@
-# 驗收紀錄（範本）
+# Acceptance log (sample)
 
-> 這是 `log:on` 時 done-gate 自動產生／追加的檔案長相。實際檔案會放在你的專案根目錄。
+> This is what `done-gate` auto-generates / appends when `log:on`. The real file lives in your project root.
 
-## 驗收紀錄 — 第 1 輪
+## Acceptance — Round 1
 
-### 本輪功能
-**記住我**
-- 在做什麼：勾了之後下次打開就不用重新登入。
-- 在哪裡：登入畫面密碼欄下方的小勾選框。
-- 怎麼操作：登入時打勾「記住我」再按登入。
+### Features this round
+**Remember me**
+- What it does: once checked, you won't have to log in again next time you open it.
+- Where it is: the small checkbox below the password field on the login screen.
+- How to use: check "Remember me" when logging in, then press Log in.
 
-### 驗收結果
-| 功能 | 狀態 |
-|------|------|
-| 記住我 | ✅ 已驗收 |
+### Verification result
+| Feature | Status |
+|---------|--------|
+| Remember me | ✅ Verified |
 
-## 驗收紀錄 — 第 2 輪
+## Acceptance — Round 2
 
-### 本輪功能
-**忘記密碼**
-- 在做什麼：忘記密碼時可自己重設，不用找客服。
-- 在哪裡：登入畫面下方「忘記密碼？」連結。
-- 怎麼操作：點連結 → 輸入信箱 → 收信照指示重設。
+### Features this round
+**Forgot password**
+- What it does: reset your own password when you forget it, without contacting support.
+- Where it is: the "Forgot password?" link below the login form.
+- How to use: click the link → enter your email → follow the email to reset.
 
-### 驗收結果
-| 功能 | 狀態 |
-|------|------|
-| 忘記密碼 | ✅ 已驗收 |
+### Verification result
+| Feature | Status |
+|---------|--------|
+| Forgot password | ✅ Verified |

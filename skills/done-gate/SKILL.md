@@ -1,153 +1,163 @@
 ---
 name: done-gate
-description: 在 Claude Code 每一輪程式/編輯工作收尾前、宣告完成或結束 session 之前使用。用白話(非技術)說明這輪做了什麼功能、功能在哪、如何操作，並用可勾選清單帶使用者逐項驗收；使用者勾選的才算通過，未勾選則續修，迴圈直到全部勾選完成才收尾。可用 /done-gate 手動呼叫，支援 log:/as:/lang: 參數。
+description: Use at the end of every coding/editing round in Claude Code, before declaring the work done or ending the session. Explain in plain (non-technical) language what was built, where it is, and how to use it, then walk the user through a checklist to verify each feature/module — only items the user checks off pass; unchecked items loop back for fixes until everything is checked. Invoke manually with /done-gate; supports log:/as:/lang: arguments.
 user-invocable: true
 ---
 
-# done-gate — 驗收型收尾關卡
+# done-gate — acceptance-gated wrap-up
 
-本 skill 規範 Claude Code 在每一輪程式/編輯工作的**收尾行為**。核心：在宣告完成或結束前，
-用白話向使用者交代成果，並由使用者「打勾」逐項驗收，未獲使用者勾選全部完成前**不得收尾**。
+This skill governs how Claude Code **wraps up** each round of coding/editing work. Core rule:
+before declaring done or ending, explain the result in plain language and have the user verify
+each item via a checkmark. **Do not wrap up until the user has checked off everything.**
 
-## 第 0 原則：防作弊 guardrail（最高優先，凌駕一切）
+## Principle 0: anti-self-pass guardrail (highest priority, overrides everything)
 
-- **禁止**在使用者尚未勾選時自行宣告「完成／done／搞定／應該沒問題」。
-- **禁止**自行代替使用者勾選、或把「我測過了」當成通過。
-- 「通過」的唯一來源是**使用者在驗收清單中親自勾選**該項。
-- 未勾選的項目一律視為「未通過」，必須繼續修，不得結束本輪。
-- 若不確定某項是否算完成，預設為「未通過」。
+- **Never** self-declare "done / finished / should be fine" while the user has not checked items off.
+- **Never** check items on the user's behalf, or treat "I tested it" as a pass.
+- The **only** source of "pass" is the user personally checking the item in the checklist.
+- Any unchecked item counts as "not passed" — keep fixing, do not end the round.
+- If unsure whether an item is done, default to "not passed".
 
-## 參數（從 $ARGUMENTS 讀取，無參數走預設）
+## Arguments (read from $ARGUMENTS; defaults apply when absent)
 
-| 參數 | 值 | 預設 | 作用 |
+| Arg | Values | Default | Effect |
 |------|----|------|------|
-| `log:` | `on` / `off` | `on` | 是否把本輪驗收寫入 `ACCEPTANCE.md` |
-| `as:`  | `user` / `elder` / `pm` / `client` | `user` | 白話說明的對象與語氣深度 |
-| `lang:`| `zh` / `en` / `both` | `zh` | 白話說明輸出語言 |
+| `log:` | `on` / `off` | `on` | Whether to append this round's acceptance to `ACCEPTANCE.md` |
+| `as:`  | `user` / `elder` / `pm` / `client` | `user` | Audience and tone of the plain-language summary |
+| `lang:`| `en` / `zh` / `both` | `en` | Output language of the plain-language summary |
 
-範例：`/done-gate log:off as:elder lang:both`
+Example: `/done-gate log:off as:elder lang:both`
 
-## 流程 A — 白話成果說明
+## Flow A — plain-language result summary
 
-對這輪交付的**每個功能/模組**各寫一段，**只能含三件事**：
+For **each feature/module** delivered this round, write one short block with **only three things**:
 
-1. **這個功能在做什麼** — 用日常生活說法，像對不懂電腦的家人解釋它解決了什麼問題。
-2. **它在哪裡** — 使用者視角的位置：畫面哪個區塊、哪個按鈕、哪條選單路徑。**不是檔案路徑**。
-3. **怎麼操作** — step-by-step 操作步驟，照著做就能用到。
+1. **What it does** — in everyday terms, as if explaining to a non-technical family member what problem it solves.
+2. **Where it is** — from the user's point of view: which screen area, which button, which menu path. **Not a file path.**
+3. **How to use it** — step-by-step, so following along actually reaches the feature.
 
-### 嚴禁出現的內容
-檔名、資料夾路徑、函式/變數名、框架/套件名、API、資料庫、程式碼片段、任何技術術語。
-若一句話需要技術詞才講得通，就改用比喻或結果來描述。
+### Strictly forbidden content
+File names, folder paths, function/variable names, framework/library names, APIs, databases,
+code snippets, any technical jargon. If a sentence needs a technical term to make sense, rephrase
+it as an analogy or as the result the user sees.
 
-### 對象語氣（依 `as:` 調整）
-- `user`：一般使用者，清楚口語。
-- `elder`：給長輩，更慢、更具體、避免任何外來語，多用比喻。
-- `pm`：給產品經理，聚焦「使用者能做到什麼、帶來什麼價值」。
-- `client`：給客戶，聚焦交付成果與可驗收的價值，語氣正式。
+### Audience tone (per `as:`)
+- `user`: a general user, clear and conversational.
+- `elder`: for an older relative — slower, more concrete, no loanwords, lots of analogies.
+- `pm`: for a product manager — focus on what the user can now do and the value it brings.
+- `client`: for a client — focus on the delivered outcome and verifiable value, formal tone.
 
-> 寫不出白話、或拿不準怎麼把技術詞翻成人話時，讀 [references/plain-language-guide.md](references/plain-language-guide.md)（含技術詞→白話對照表、各對象範本）。
+> When struggling to write plain language or to translate jargon into human terms, read
+> [references/plain-language-guide.md](references/plain-language-guide.md) (jargon→plain tables, per-audience templates).
 
-### 好 / 壞範例（照「好」的格式寫）
+### Good / bad example (follow the "good" format)
 
-✅ 好：
-> **匯出報表**
-> - 在做什麼：讓你把畫面上的資料一鍵存成一份檔案，方便寄給別人或留底。
-> - 在哪裡：右上角那排按鈕裡，標著「匯出」的那一顆。
-> - 怎麼操作：1) 先選好要看的月份 → 2) 按右上角「匯出」→ 3) 選擇存到電腦的位置即可。
+✅ Good:
+> **Export report**
+> - What it does: lets you save the data on screen to a file in one click, to email or keep.
+> - Where it is: the top-right button row, the one labeled "Export".
+> - How to use: 1) pick the month you want → 2) click "Export" top-right → 3) choose where to save.
 
-❌ 壞（出現技術詞、講位置用檔案路徑）：
-> 新增 `ExportService.exportCSV()`，掛在 `ReportPage.tsx` 的 onClick，呼叫後端 `/api/export`…
+❌ Bad (jargon, uses a file path for "where"):
+> Added `ExportService.exportCSV()`, wired to `ReportPage.tsx` onClick, calling backend `/api/export`…
 
-更多完整對話範例見 [references/examples.md](references/examples.md)。
+More full conversation examples: [references/examples.md](references/examples.md).
 
-## 流程 B — 可勾選驗收清單
+## Flow B — checklist verification
 
-**前置硬規則：每次請使用者勾選前，必須先完整呈現流程 A 的白話改動說明（這輪改了什麼、在哪裡、怎麼操作），不可直接跳到清單。** 沒有白話說明就丟清單視為違規。
+**Hard prerequisite: before asking the user to check anything, you MUST first present the full
+Flow A plain-language summary (what changed, where, how to use). Never jump straight to the checklist.**
+Throwing a checklist with no plain-language summary is a violation.
 
-用 `AskUserQuestion`（`multiSelect: true`）把每個功能列成一題，
-請使用者**勾選「我已確認完成」的項目**。每個選項 label = 功能名稱，description = 一句白話驗收重點。
+Use `AskUserQuestion` (`multiSelect: true`) with each feature as one option, and ask the user to
+**check the items they have confirmed done**. Each option's label = feature name, description = a
+one-line plain-language way to verify it.
 
-- 使用者勾選的項目 → 通過。
-- 未勾選的項目 → 未通過。
+> How to split features into checkable items and write the "how to verify" description:
+> [references/checklist-writing.md](references/checklist-writing.md).
 
-## 流程 C — 續修迴圈
+- Items the user checks → passed.
+- Unchecked items → not passed.
 
-當有項目未勾選（未通過）時：
+## Flow C — fix loop
 
-**C-1 診斷：先問「為什麼沒勾」**
-對每個未通過項目，用 `AskUserQuestion` 拋出原因選項，讓使用者選方向：
-- **有 bug** — 請使用者描述問題點／重現方式（可留空，由 Claude 自行排查）。
-- **想優化** — 請使用者給優化建議或期望。
-- **自訂** — 使用者自行說明還差什麼。
+When any item is unchecked (not passed):
 
-（一次可針對多個未通過項目發問；用選項的 description 引導使用者補充細節。）
+**C-1 Diagnose: ask "why not checked" first**
+For each unchecked item, use `AskUserQuestion` to offer reason options so the user picks a direction:
+- **Has a bug** — ask the user to describe the problem / how to reproduce (may be left blank; Claude investigates).
+- **Wants improvement** — ask the user for the improvement they expect.
+- **Custom** — the user explains what is still missing.
 
-**C-2 修正並重驗**
-- 依使用者選的方向把未通過項目當新需求 → 修正。
-- 修正後**只對受影響的項目重跑 A + B**（不必重列已通過的）。
-- 重複 C-1～C-2，直到使用者勾選**全部**完成。
+(You may ask about several unchecked items at once; use option descriptions to prompt for detail.)
 
-## 流程 D — 收尾條件
+**C-2 Fix and re-verify**
+- Treat unchecked items as new requirements per the chosen direction → fix.
+- After fixing, **re-run A + B only for the affected items** (no need to re-list passed ones).
+- Repeat C-1～C-2 until the user has checked off **everything**.
 
-- **只有**使用者勾選全部功能完成後，才可結束本輪。
-- 收尾時依下列加值功能輸出摘要與紀錄。
-- 在那之前，無論測試多綠、自評多高，都**不得**自行收尾（見第 0 原則）。
+## Flow D — wrap-up condition
 
-## 加值功能
+- Only after the user checks off all features may the round end.
+- On wrap-up, emit the summary and record per the value-add features below.
+- Until then, no matter how green the tests or how high your self-assessment, **do not** self-wrap-up (see Principle 0).
 
-### 1. 結尾 ✅/❌ 摘要表
-收尾時輸出一張表，總覽每項狀態：
+## Value-add features
 
-| 功能 | 狀態 |
-|------|------|
-| 匯出報表 | ✅ 已驗收 |
-| 篩選器 | ✅ 已驗收 |
+### 1. Closing ✅/❌ summary table
+On wrap-up, emit a table summarizing each item's status:
 
-（迴圈中途若仍有未過項，用 ❌ 標示，並說明還差什麼。）
+| Feature | Status |
+|---------|--------|
+| Export report | ✅ Verified |
+| Filter | ✅ Verified |
 
-### 2. 未過項目轉 TODO
-若使用者主動喊停、或某項暫時無法完成，把未通過項目整理成純文字續做清單交給使用者，
-格式：`- [ ] 功能名稱 — 還差什麼`，方便下一輪接手。
+(If items remain unpassed mid-loop, mark them ❌ and state what's still missing.)
 
-### 3. 驗收紀錄檔 ACCEPTANCE.md（`log:on` 時）
-每輪收尾後，把本輪的白話成果說明＋勾選結果**追加**寫入專案根目錄 `ACCEPTANCE.md`。
-若檔案不存在則建立；存在則在最後追加新的一輪區塊：
+### 2. Unpassed items → TODO
+If the user stops early, or an item can't be finished for now, collect unpassed items into a
+plain-text follow-up list for the next round, formatted: `- [ ] <feature> — what's still missing`.
+
+### 3. Acceptance log ACCEPTANCE.md (when `log:on`)
+After wrap-up, **append** this round's plain-language summary + checkmark results to
+`ACCEPTANCE.md` in the project root. Create it if absent; otherwise append a new round block:
 
 ```markdown
-## 驗收紀錄 — 第 N 輪
+## Acceptance — Round N
 
-### 本輪功能
-（流程 A 的白話說明，逐項）
+### Features this round
+(Flow A plain-language summary, per feature)
 
-### 驗收結果
-| 功能 | 狀態 |
-|------|------|
+### Verification result
+| Feature | Status |
+|---------|--------|
 | ... | ✅/❌ |
 ```
 
-> 不寫日期戳記以避免猜測時間；輪次以檔內既有區塊數 +1 標示。`log:off` 時完全略過此步。
-> 範本見 [examples/ACCEPTANCE.sample.md](../../examples/ACCEPTANCE.sample.md)。
+> No date stamps (avoid guessing the time); the round number = existing block count + 1.
+> When `log:off`, skip this step entirely. Template: [examples/ACCEPTANCE.sample.md](../../examples/ACCEPTANCE.sample.md).
 
-### 4. 中英雙語（依 `lang:`）
-- `zh`：僅繁體中文。
-- `en`：僅英文。
-- `both`：每段先中文、後英文。
+### 4. Bilingual output (per `lang:`)
+- `en`: English only.
+- `zh`: Traditional Chinese only.
+- `both`: each block in English first, then Chinese.
 
-### 5. 操作截圖標註（web 專案，選用）
-若本輪改動屬於可在瀏覽器看到的網頁介面，且環境中有 playwright MCP 工具：
-- 開啟對應頁面，對「功能在哪裡」的位置截圖，作為白話說明的視覺輔助。
-- 截圖存到 scratchpad，於說明中引用。
+### 5. Screenshot annotation (web, optional)
+If this round's change is a browser-visible web UI and a playwright MCP tool is available:
+- Open the relevant page, screenshot the spot where the feature lives, as a visual aid for the summary.
+- Save screenshots to the scratchpad, and reference them in the summary.
 
-若沒有 playwright MCP 或非 web 專案：**自動略過**，並用一句話告知使用者「此環境未啟用截圖，已略過」。
-不要為了截圖自行安裝瀏覽器或新增相依套件。
+If there is no playwright MCP or it's not a web project: **skip automatically** and tell the user in
+one line, "screenshots not enabled in this environment, skipped". Do not install a browser or add
+dependencies just to screenshot. Detailed steps: [references/screenshot-flow.md](references/screenshot-flow.md).
 
-## 配套命令
-- `/done-gate-status` — 列出本輪目前各項驗收狀態（已過／待修）。
-- `/done-gate-log` — 摘要 `ACCEPTANCE.md` 的歷史交付紀錄。
+## Companion commands
+- `/done-gate-status` — list the current round's per-item status (passed / pending).
+- `/done-gate-log` — summarize the delivery history in `ACCEPTANCE.md`.
 
-## 收尾檢查清單（自我把關）
-- [ ] 白話說明零技術名詞，三件事齊全（做什麼／在哪裡／怎麼操作）
-- [ ] 已用可勾選清單請使用者驗收
-- [ ] 未勾項目已續修、未自行宣告完成
-- [ ] 使用者勾選全部完成後才收尾
-- [ ] 已輸出 ✅/❌ 摘要表（`log:on` 另寫入 ACCEPTANCE.md）
+## Wrap-up self-check
+- [ ] Plain-language summary has zero jargon, all three parts (what / where / how)
+- [ ] Used a checklist to ask the user to verify
+- [ ] Unchecked items were fixed; never self-declared done
+- [ ] Round ended only after the user checked off everything
+- [ ] Emitted the ✅/❌ summary table (and wrote ACCEPTANCE.md when `log:on`)

@@ -1,15 +1,15 @@
 ---
-description: 列出本輪目前各功能的驗收狀態（已通過／待修），不結束本輪。
+description: List the current round's per-feature verification status (passed / pending), without ending the round.
 allowed-tools: Read
 ---
 
-列出**本輪**所有交付功能目前的驗收狀態，輸出一張表：
+List the current status of every feature delivered **this round** as a table:
 
-| 功能 | 狀態 |
-|------|------|
-| <功能名> | ✅ 已驗收 / ❌ 待修（還差什麼） |
+| Feature | Status |
+|---------|--------|
+| <feature> | ✅ Verified / ❌ Pending (what's missing) |
 
-規則：
-- 「已驗收」僅限**使用者已親自勾選**的項目；其餘一律標 ❌ 待修。
-- 不要在此宣告本輪完成、不要收尾——這只是進度快照。
-- 若尚未進行過驗收，提示使用者執行 `/done-gate` 開始驗收。
+Rules:
+- "Verified" applies only to items the **user has personally checked off**; everything else is ❌ Pending.
+- Do not declare the round complete or wrap up here — this is just a progress snapshot.
+- If no verification has happened yet, prompt the user to run `/done-gate` to start.

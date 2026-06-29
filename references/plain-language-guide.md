@@ -1,50 +1,93 @@
-# 白話說明深度指南
+# Plain-language guide (deep dive)
 
-流程 A 要把「做了什麼」翻成不懂電腦的人也聽得懂的話。本檔是寫不出來時的對照與範本。
+Flow A must translate "what was done" into words a non-technical person understands.
+This file is the reference for when the words won't come.
 
-## 黃金結構（每個功能三句）
+## The golden structure (three sentences per feature)
 
-1. **在做什麼** — 它幫使用者解決什麼問題、帶來什麼結果。用「你可以…」開頭最穩。
-2. **它在哪裡** — 使用者眼睛看得到的位置（畫面區塊／按鈕名稱／選單路徑），**絕不**用檔案路徑。
-3. **怎麼操作** — 編號步驟，照做就能用到。
+1. **What it does** — what problem it solves for the user, what result it brings. Starting with "You can…" is safest.
+2. **Where it is** — the location the user can see (screen area / button label / menu path), **never** a file path.
+3. **How to use it** — numbered steps; following them reaches the feature.
 
-## 技術詞 → 白話對照
+## Jargon → plain language
 
-| 技術說法 | 白話說法 |
-|----------|----------|
-| 新增 API endpoint | 讓畫面能去拿到／送出資料 |
-| 重構某函式 | 把背後的做法整理乾淨，使用上沒變化 |
-| 修正 null pointer / 例外 | 修好一個會讓畫面當掉或出錯的狀況 |
-| 加快取 / cache | 讓同樣的東西第二次打開更快 |
-| 加索引 / 優化查詢 | 讓資料找得更快，列表不會卡 |
-| 加驗證 / validation | 防止你不小心填錯、漏填 |
-| 加單元測試 | 加了自動檢查，之後改東西比較不會弄壞它 |
-| 串接第三方服務 | 接上了某個外部服務（如寄信、付款） |
-| 狀態管理 / state | 讓畫面記得你剛剛的選擇 |
-| RWD / 響應式 | 手機和電腦上都排得好看 |
+| Technical phrasing | Plain phrasing |
+|--------------------|----------------|
+| Added an API endpoint | Lets the screen fetch / send data |
+| Refactored a function | Tidied up how it works behind the scenes; nothing changes for you |
+| Fixed a null pointer / exception | Fixed a case that crashed or errored the screen |
+| Added caching | Makes opening the same thing again faster |
+| Added an index / optimized a query | Makes data load faster; the list won't lag |
+| Added validation | Stops you from mistyping or leaving things out |
+| Added unit tests | Added automatic checks, so future changes are less likely to break it |
+| Integrated a third-party service | Connected an outside service (e.g. email, payment) |
+| State management | Lets the screen remember your recent choices |
+| Responsive / RWD | Looks good on both phone and computer |
 
-> 原則：使用者**感受到的差別**才是重點，背後怎麼做不必講。
+> Principle: what matters is the **difference the user feels**; how it's done under the hood need not be said.
 
-## 各對象範本（as: 參數）
+## Per-audience templates (the `as:` arg)
 
-**user（一般使用者）**
-> 你現在可以把清單一鍵存成檔案。位置在右上角「匯出」鍵，選好範圍按下去、挑存檔位置即可。
+**user (general user)**
+> You can now save the list to a file in one click. It's the "Export" button top-right — pick the range, click it, choose where to save.
 
-**elder（長輩）**
-> 多了一個「存起來」的功能。就像把畫面上的東西印成一張紙留著。
-> 在螢幕右上角，有一顆寫著「匯出」的按鈕。先選好要哪幾個月，再按它，
-> 電腦會問你要放哪裡，選好桌面就找得到了。
+**elder (older relative)**
+> There's a new "save it" feature. It's like printing what's on screen onto a sheet of paper to keep.
+> It's at the top-right of the screen — a button that says "Export". First pick which months you want,
+> then press it; the computer will ask where to put it, choose the Desktop and you'll find it there.
 
-**pm（產品經理）**
-> 使用者現在能自助匯出報表，不必再請工程協助出檔，減少一個人工環節。
-> 入口在報表頁右上角，支援先篩選再匯出。
+**pm (product manager)**
+> Users can now self-serve report exports without engineering help — one fewer manual step.
+> Entry point is top-right of the report page, supports filter-then-export.
 
-**client（客戶）**
-> 本次交付「報表匯出」功能：使用者可於報表頁右上角一鍵將篩選後的資料匯出存檔，
-> 供對外寄送或存查。操作三步：選範圍 → 匯出 → 選存放位置。
+**client**
+> This delivery: a "report export" feature. On the report page top-right, users can export the
+> filtered data to a file in one click, for sending out or archiving. Three steps: pick range → export → choose location.
 
-## 常見錯誤（別這樣寫）
-- ❌ 用檔案路徑當「在哪裡」（`src/pages/Report.tsx`）。
-- ❌ 出現函式名、套件名、框架名。
-- ❌ 只說「做完了」卻沒講使用者能做到什麼。
-- ❌ 把實作細節當賣點（「改用 useMemo」對使用者沒意義）。
+## Domain-specific jargon → plain language
+
+### Frontend / Web
+| Technical | Plain |
+|-----------|-------|
+| Loading spinner / skeleton | Shows a placeholder while data loads, so it's not blank and alarming |
+| Form validation | Warns you in real time if you mistype; won't submit |
+| Pagination / infinite scroll | With lots of data, shows part at a time; scroll for more |
+| Routing / route | Each screen has its own address you can link straight to |
+| Dark mode | Switch to an easy-on-the-eyes dark screen |
+
+### Backend / Data
+| Technical | Plain |
+|-----------|-------|
+| Scheduling / cron | The system does something automatically at a set time, no button needed |
+| Batch processing | Handles a whole batch at once instead of one by one |
+| Access control | Different roles can see / do different things |
+| Backup | Data can be recovered if something goes wrong |
+| Import / export | Bring data in or take it out in bulk |
+
+### Mobile app
+| Technical | Plain |
+|-----------|-------|
+| Push notification | You get a reminder even when the app isn't open |
+| Offline mode | Works without internet, syncs once you reconnect |
+| Biometrics | Unlock with fingerprint or face, no password to type |
+
+### CLI / tooling
+| Technical | Plain |
+|-----------|-------|
+| Added a flag | Add an option after the command to change its behavior |
+| Config file | Saves your common settings so you don't retype them |
+| Exit code | Reports success or failure with a code, easy to chain next steps |
+
+## How to describe "where it is" (by app type)
+
+- **Web / desktop**: screen position + button label. "Top-right, the button labeled 'Export'."
+- **Mobile app**: tab name + gesture. "The 'Me' tab at the bottom, scroll down to 'Security'."
+- **CLI**: the command itself. "Type `xxx --export` in the terminal and it kicks in."
+- **Invisible (background/automatic)**: the trigger and the result. "Runs automatically at midnight; you'll see the report in your inbox the next morning."
+
+## Common mistakes (don't write these)
+- ❌ Using a file path for "where" (`src/pages/Report.tsx`).
+- ❌ Function names, package names, framework names.
+- ❌ Saying "done" without saying what the user can now do.
+- ❌ Selling implementation detail ("switched to useMemo" means nothing to a user).
+- ❌ For background features, saying "added scheduling" without "when, and what happens".

@@ -104,7 +104,7 @@ Triggers automatically at wrap-up, or invoke manually:
 |------|----|------|------|
 | `log:` | `on` / `off` | `on` | Write the acceptance into `ACCEPTANCE.md` |
 | `as:`  | `user` / `elder` / `pm` / `client` | `user` | Audience & tone of the plain-language summary |
-| `lang:`| `zh` / `en` / `both` | `zh` | Output language |
+| `lang:`| `en` / `zh` / `both` | `en` | Output language |
 
 ## Features
 

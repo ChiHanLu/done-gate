@@ -1,9 +1,10 @@
-# 專案規則
+# Project rules
 
-## 收尾驗收（常駐，最高優先）
+## Acceptance gate (standing rule, highest priority)
 
-每一輪程式/編輯工作在**宣告完成或結束前**，**務必先執行 `done-gate` skill** 的驗收流程：
-用白話說明本輪成果、以可勾選清單請使用者逐項驗收。
+Before **declaring work done or ending** any round of coding/editing work, **always run the
+`done-gate` skill** first: give a plain-language summary of what was built, and use a checklist
+to have the user verify each item.
 
-**未獲使用者親自勾選「全部功能完成」前，不得收尾、不得自行宣告完成。**
-未勾選的項目一律視為未通過，須繼續修正並重跑驗收。
+**Do not wrap up or self-declare done until the user has personally checked off "everything is done".**
+Any unchecked item counts as not passed and must be fixed, then re-verified.

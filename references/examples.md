@@ -1,69 +1,69 @@
-# 完整對話範例
+# Full conversation examples
 
-示範 done-gate 的 A→B→C→D 全流程，給 Claude 照著演。
+Demonstrates done-gate's A→B→C→D flow for Claude to follow.
 
-## 範例 1：一次通過
-
-```
-你：幫我把登入頁加上「記住我」勾選框
-
-Claude（流程 A，先白話）：
-  記住我
-  - 在做什麼：勾了之後，下次打開就不用每次重新登入。
-  - 在哪裡：登入畫面、密碼欄位下方，新增的那個小勾選框。
-  - 怎麼操作：登入時把「記住我」打勾，再按登入即可。
-
-Claude（流程 B，可勾選清單）：請勾選已確認完成：
-  ☐ 記住我
-
-你：✅（勾選）
-
-Claude（流程 D，收尾）：
-  | 功能 | 狀態 |
-  |------|------|
-  | 記住我 | ✅ 已驗收 |
-  本輪完成，已寫入 ACCEPTANCE.md。
-```
-
-## 範例 2：未過 → 診斷 → 續修
+## Example 1: passes on the first try
 
 ```
-Claude（流程 B）：請勾選已確認完成：
-  ☐ 記住我
+You: Add a "Remember me" checkbox to the login page
 
-你：（不勾）
+Claude (Flow A, plain language first):
+  Remember me
+  - What it does: once checked, you won't have to log in again next time you open it.
+  - Where it is: below the password field on the login screen — the new little checkbox.
+  - How to use: check "Remember me" when logging in, then press Log in.
 
-Claude（流程 C-1，問原因）：「記住我」未勾選，原因是？
-  ○ 有 bug  ○ 想優化  ○ 自訂
+Claude (Flow B, checklist): Check the items you've confirmed done:
+  ☐ Remember me
 
-你：有 bug → 勾了還是要重新登入
+You: ✅ (checked)
 
-Claude（流程 C-2，修正後只重驗這項）：
-  （說明修正後的白話）… 請再次確認：
-  ☐ 記住我
-
-你：✅
-
-Claude（流程 D，收尾）：✅ 全數通過，收尾並記錄。
+Claude (Flow D, wrap-up):
+  | Feature | Status |
+  |---------|--------|
+  | Remember me | ✅ Verified |
+  Round complete, written to ACCEPTANCE.md.
 ```
 
-## 範例 3：多功能、部分未過
+## Example 2: not passed → diagnose → fix
 
 ```
-Claude（流程 B）：請勾選已確認完成：
-  ☐ 記住我   ☐ 忘記密碼   ☐ 第三方登入
+Claude (Flow B): Check the items you've confirmed done:
+  ☐ Remember me
 
-你：✅ 記住我、✅ 忘記密碼（第三方登入不勾）
+You: (leave it unchecked)
 
-Claude（流程 C-1，只問未過項）：「第三方登入」未勾選，原因是？
-  ○ 有 bug  ○ 想優化  ○ 自訂
+Claude (Flow C-1, ask why): "Remember me" is unchecked. Why?
+  ○ Has a bug  ○ Wants improvement  ○ Custom
 
-…（針對「第三方登入」續修並重驗，已過的兩項不再重列）…
+You: Has a bug → still asks me to log in again after checking it
 
-最終收尾摘要：
-| 功能 | 狀態 |
-|------|------|
-| 記住我 | ✅ |
-| 忘記密碼 | ✅ |
-| 第三方登入 | ✅ |
+Claude (Flow C-2, fix then re-verify only this item):
+  (plain-language summary of the fix) … Please confirm again:
+  ☐ Remember me
+
+You: ✅
+
+Claude (Flow D, wrap-up): ✅ All passed, wrapping up and recording.
+```
+
+## Example 3: multiple features, some not passed
+
+```
+Claude (Flow B): Check the items you've confirmed done:
+  ☐ Remember me   ☐ Forgot password   ☐ Social login
+
+You: ✅ Remember me, ✅ Forgot password (Social login left unchecked)
+
+Claude (Flow C-1, ask only about the unpassed item): "Social login" is unchecked. Why?
+  ○ Has a bug  ○ Wants improvement  ○ Custom
+
+…(fix and re-verify "Social login" only; the two passed items are not re-listed)…
+
+Final wrap-up summary:
+| Feature | Status |
+|---------|--------|
+| Remember me | ✅ |
+| Forgot password | ✅ |
+| Social login | ✅ |
 ```
