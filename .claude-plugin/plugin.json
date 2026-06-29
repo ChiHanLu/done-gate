@@ -18,6 +18,7 @@
   ],
   "skills": "./skills/",
   "commands": [
+    "./commands/dg.md",
     "./commands/done-gate-status.md",
     "./commands/done-gate-log.md",
     "./commands/done-gate-config.md",

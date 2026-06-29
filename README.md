@@ -98,7 +98,7 @@ and add the standing rule from `CLAUDE.md`. It then auto-loads when you open tha
 Triggers automatically at wrap-up, or invoke manually:
 
 ```
-/done-gate                       # run the acceptance flow
+/done-gate                       # run the acceptance flow  (alias: /dg)
 /done-gate log:off as:elder lang:both
 /done-gate-status                # snapshot of this round's pass/pending
 /done-gate-log                   # summarize ACCEPTANCE.md history

@@ -159,6 +159,7 @@ one line, "screenshots not enabled in this environment, skipped". Do not install
 dependencies just to screenshot. Detailed steps: [references/screenshot-flow.md](references/screenshot-flow.md).
 
 ## Companion commands
+- `/dg` — shorthand alias for `/done-gate`.
 - `/done-gate-status` — list the current round's per-item status (passed / pending).
 - `/done-gate-log` — summarize the delivery history in `ACCEPTANCE.md`.
 - `/done-gate-config` — turn done-gate `on`/`off`, or view/set defaults (`log`/`as`/`lang`) in `.done-gate.json`.
