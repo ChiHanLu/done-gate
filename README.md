@@ -10,6 +10,10 @@ An **acceptance-gated wrap-up skill** for Claude Code.
 > "the thing the user wanted is done". done-gate hands the final call back to you:
 > **nothing is done until you personally check it off.**
 
+![done-gate demo](assets/demo.gif)
+
+<sub>Scripted recreation of the flow — not a live capture.</sub>
+
 English ｜ [繁體中文](README.zh.md)
 
 ## Table of Contents

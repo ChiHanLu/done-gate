@@ -9,6 +9,10 @@
 > 痛點：Claude Code 會寫程式、也會自測，但「自測通過」不等於「使用者要的東西做好了」。
 > done-gate 把收尾的決定權交還使用者——**沒有你親自勾選，這一輪就不算完成。**
 
+![done-gate demo](assets/demo.gif)
+
+<sub>流程的腳本重現，非真實畫面錄影。</sub>
+
 [English](README.md) ｜ 繁體中文
 
 ## 目錄
