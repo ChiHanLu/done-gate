@@ -1,0 +1,24 @@
+{
+  "name": "verify-done",
+  "version": "0.1.0",
+  "description": "Acceptance-gated wrap-up for Claude Code. Before declaring done, Claude explains the round's work in plain non-technical language (what / where / how to use), then has the user verify each feature via a checklist — only checked items pass, unchecked ones loop back for fixes until the user confirms everything. Use at the end of any coding/editing round before wrapping up.",
+  "author": {
+    "name": "LuHan",
+    "email": "john_lu@intellitrustme.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/ChiHanLu/verify-done",
+  "repository": "https://github.com/ChiHanLu/verify-done.git",
+  "keywords": [
+    "claude-code",
+    "acceptance",
+    "verification",
+    "plain-language",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "commands": [
+    "./commands/verify-status.md",
+    "./commands/verify-log.md"
+  ]
+}

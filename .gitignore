@@ -1,0 +1,11 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+
+# Local Claude plugin runtime markers
+.in_use/
+
+# Local acceptance log generated when using the skill in a real project
+# (the sample lives in examples/ instead)
+/ACCEPTANCE.md
