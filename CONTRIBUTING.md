@@ -1,14 +1,14 @@
 # Contributing
 
-Thanks for helping improve **verify-done**.
+Thanks for helping improve **done-gate**.
 
 ## Project layout
 
 ```
 .
 ├── .claude-plugin/plugin.json   # plugin manifest
-├── skills/verify-done/SKILL.md  # the skill (core logic)
-├── commands/                    # /verify-status, /verify-log
+├── skills/done-gate/SKILL.md    # the skill (core logic)
+├── commands/                    # /done-gate-status, /done-gate-log
 ├── references/                  # deep-dive docs, loaded on demand
 ├── examples/                    # sample ACCEPTANCE.md
 ├── CLAUDE.md                    # standing rule that triggers the skill every round
@@ -18,9 +18,9 @@ Thanks for helping improve **verify-done**.
 ## Local testing in this repo
 
 Option A — install as a plugin (recommended): add this repo as a plugin source in Claude Code,
-then `/verify-done` and the companion commands are available everywhere.
+then `/done-gate` and the companion commands are available everywhere.
 
-Option B — project skill: copy `skills/verify-done/` into a project's `.claude/skills/`
+Option B — project skill: copy `skills/done-gate/` into a project's `.claude/skills/`
 and add the standing rule from `CLAUDE.md`. The skill then auto-loads when you open that project.
 
 ## Design principles (please keep)

@@ -1,6 +1,6 @@
 # 完整對話範例
 
-示範 verify-done 的 A→B→C→D 全流程，給 Claude 照著演。
+示範 done-gate 的 A→B→C→D 全流程，給 Claude 照著演。
 
 ## 範例 1：一次通過
 

@@ -1,10 +1,10 @@
 ---
-name: verify-done
-description: 在 Claude Code 每一輪程式/編輯工作收尾前、宣告完成或結束 session 之前使用。用白話(非技術)說明這輪做了什麼功能、功能在哪、如何操作，並用可勾選清單帶使用者逐項驗收；使用者勾選的才算通過，未勾選則續修，迴圈直到全部勾選完成才收尾。可用 /verify-done 手動呼叫，支援 log:/as:/lang: 參數。
+name: done-gate
+description: 在 Claude Code 每一輪程式/編輯工作收尾前、宣告完成或結束 session 之前使用。用白話(非技術)說明這輪做了什麼功能、功能在哪、如何操作，並用可勾選清單帶使用者逐項驗收；使用者勾選的才算通過，未勾選則續修，迴圈直到全部勾選完成才收尾。可用 /done-gate 手動呼叫，支援 log:/as:/lang: 參數。
 user-invocable: true
 ---
 
-# verify-done — 驗收型收尾流程
+# done-gate — 驗收型收尾關卡
 
 本 skill 規範 Claude Code 在每一輪程式/編輯工作的**收尾行為**。核心：在宣告完成或結束前，
 用白話向使用者交代成果，並由使用者「打勾」逐項驗收，未獲使用者勾選全部完成前**不得收尾**。
@@ -25,7 +25,7 @@ user-invocable: true
 | `as:`  | `user` / `elder` / `pm` / `client` | `user` | 白話說明的對象與語氣深度 |
 | `lang:`| `zh` / `en` / `both` | `zh` | 白話說明輸出語言 |
 
-範例：`/verify-done log:off as:elder lang:both`
+範例：`/done-gate log:off as:elder lang:both`
 
 ## 流程 A — 白話成果說明
 
@@ -142,8 +142,8 @@ user-invocable: true
 不要為了截圖自行安裝瀏覽器或新增相依套件。
 
 ## 配套命令
-- `/verify-status` — 列出本輪目前各項驗收狀態（已過／待修）。
-- `/verify-log` — 摘要 `ACCEPTANCE.md` 的歷史交付紀錄。
+- `/done-gate-status` — 列出本輪目前各項驗收狀態（已過／待修）。
+- `/done-gate-log` — 摘要 `ACCEPTANCE.md` 的歷史交付紀錄。
 
 ## 收尾檢查清單（自我把關）
 - [ ] 白話說明零技術名詞，三件事齊全（做什麼／在哪裡／怎麼操作）

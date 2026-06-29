@@ -1,13 +1,13 @@
-# verify-done
+# done-gate
 
 ![type](https://img.shields.io/badge/Claude%20Code-Skill-7C3AED)
-![invoke](https://img.shields.io/badge/slash-%2Fverify--done-blue)
+![invoke](https://img.shields.io/badge/slash-%2Fdone--gate-blue)
 ![lang](https://img.shields.io/badge/output-ZH%20%2F%20EN-success)
 
 An **acceptance-gated wrap-up skill** for Claude Code.
 
 > The problem: Claude Code writes code and self-tests it — but "tests pass" is not
-> "the thing the user wanted is done". verify-done hands the final call back to you:
+> "the thing the user wanted is done". done-gate hands the final call back to you:
 > **nothing is done until you personally check it off.**
 
 English ｜ [繁體中文](README.zh.md)
@@ -34,7 +34,7 @@ Claude must not self-declare completion, check items on your behalf, or wave it 
 
 ## Why you need it
 
-| | Without verify-done | With verify-done |
+| | Without done-gate | With done-gate |
 |---|---|---|
 | Definition of done | Claude self-judges "tested, should be fine" | **You check it off** |
 | When it wraps up | Claude declares done and stops | Won't wrap up until you check everything |
@@ -47,7 +47,7 @@ Claude must not self-declare completion, check items on your behalf, or wave it 
 ```
 You: Add an "Export report" button to the settings page
 
-Claude: (after coding & self-testing, verify-done triggers before wrap-up)
+Claude: (after coding & self-testing, done-gate triggers before wrap-up)
 
   What was built (plain language)
   Export report
@@ -74,19 +74,19 @@ Claude: (fixes, re-verifies only this item) … wraps up only after you check �
 This repo is a **Claude Code plugin**. Two ways to use it:
 
 **A — As a plugin (recommended):** add this repo as a plugin source in Claude Code.
-The skill and the `/verify-status` · `/verify-log` commands become available everywhere.
+The skill and the `/done-gate-status` · `/done-gate-log` commands become available everywhere.
 
-**B — As a project skill:** copy `skills/verify-done/` into a project's `.claude/skills/`
+**B — As a project skill:** copy `skills/done-gate/` into a project's `.claude/skills/`
 and add the standing rule from `CLAUDE.md`. It then auto-loads when you open that project.
 
 ```
 .
 ├── .claude-plugin/plugin.json   # plugin manifest
-├── skills/verify-done/SKILL.md  # the skill (core logic)
-├── commands/                    # /verify-status, /verify-log
+├── skills/done-gate/SKILL.md  # the skill (core logic)
+├── commands/                    # /done-gate-status, /done-gate-log
 ├── references/                  # deep-dive docs, loaded on demand
 ├── examples/                    # sample ACCEPTANCE.md
-└── CLAUDE.md                    # standing rule: run verify-done before every wrap-up
+└── CLAUDE.md                    # standing rule: run done-gate before every wrap-up
 ```
 
 ## Usage
@@ -94,10 +94,10 @@ and add the standing rule from `CLAUDE.md`. It then auto-loads when you open tha
 Triggers automatically at wrap-up, or invoke manually:
 
 ```
-/verify-done                       # run the acceptance flow
-/verify-done log:off as:elder lang:both
-/verify-status                     # snapshot of this round's pass/pending
-/verify-log                        # summarize ACCEPTANCE.md history
+/done-gate                       # run the acceptance flow
+/done-gate log:off as:elder lang:both
+/done-gate-status                     # snapshot of this round's pass/pending
+/done-gate-log                        # summarize ACCEPTANCE.md history
 ```
 
 | Param | Values | Default | Effect |
